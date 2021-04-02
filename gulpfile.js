@@ -1,0 +1,19 @@
+const { src, dest, series, parallel, watch } = require('gulp');
+const del = require('del');
+const sass = require('gulp-sass');
+const concat = require('gulp-concat');
+const minify = require('gulp-minify');
+const path = require('path');
+const bs = require('browser-sync').create();
+const imagemin = require('gulp-imagemin');
+const wpot = require('gulp-wp-pot');
+const potomo = require('gulp-potomo');
+const jsvalidate = require('gulp-jsvalidate');
+const eslint = require('gulp-eslint');
+const jsonlint = require('gulp-jsonlint');
+const phpcs = require('gulp-phpcs');
+const phpmd = require('gulp-phpmd');
+const stylelint = require('gulp-stylelint');
+
+const THEMENAME = path.basename(__dirname);
+const BLDROOT = 'bld/' + THEMENAME + '/';
