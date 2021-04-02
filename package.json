@@ -1,0 +1,27 @@
+{
+  "name": "overfew",
+  "version": "1.0.0",
+  "description": "WordPress starter theme forked from underscores.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axiomattik/overfew.git"
+  },
+  "keywords": [
+    "wordpress",
+    "starter",
+    "theme",
+    "underscores",
+    "gulp",
+    "boilerplate"
+  ],
+  "author": "axiomattik",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/axiomattik/overfew/issues"
+  },
+  "homepage": "https://github.com/axiomattik/overfew#readme"
+}
