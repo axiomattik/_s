@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/axiomattik/overfew#readme",
   "devDependencies": {
+    "@wordpress/stylelint-config": "^19.0.1",
     "browser-sync": "^2.26.14",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
@@ -35,11 +36,13 @@
     "gulp-jsvalidate": "^5.0.0",
     "gulp-minify": "^3.1.0",
     "gulp-phpcs": "^3.1.0",
-    "gulp-phpmd": "^2.0.1",
     "gulp-potomo": "^1.1.0",
+    "gulp-rtlcss": "^1.4.1",
     "gulp-sass": "^4.1.0",
     "gulp-stylelint": "^13.0.0",
     "gulp-wp-pot": "^2.5.0",
-    "path": "^0.12.7"
+    "gulp-zip": "^5.1.0",
+    "path": "^0.12.7",
+    "stylelint": "^13.12.0"
   }
 }
