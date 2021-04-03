@@ -46,7 +46,7 @@ function copyJS() {
 function compileSASS() {
   return src('src/sass/style.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(dest('src/style.css'))
+    .pipe(dest('src/style.css', {overwrite: true}))
 }
 
 
@@ -56,7 +56,7 @@ function compileWooCommerceSASS() {
       allowEmpty: 'true',
     })
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(dest('src/woocommerce.css'))
+    .pipe(dest('src/woocommerce.css', {overwrite: true}))
 }
 
 
