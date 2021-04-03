@@ -16,7 +16,7 @@ const zip = require('gulp-zip');
 const bs = require('browser-sync').create();
 
 const THEMENAME = path.basename(__dirname);
-const BLDROOT = 'bld/' + THEMENAME + '/';
+const BLDROOT = 'bld/' + THEMENAME;
 
 
 /* JavaScript */
@@ -46,7 +46,7 @@ function copyJS() {
 function compileSASS() {
   return src('src/sass/style.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(dest('src/style.css', {overwrite: true}))
+    .pipe(dest(`${BLDROOT}/style.css`))
 }
 
 
@@ -56,15 +56,15 @@ function compileWooCommerceSASS() {
       allowEmpty: 'true',
     })
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(dest('src/woocommerce.css', {overwrite: true}))
+    .pipe(dest(`${BLDROOT}/woocommerce.css`))
 }
 
 
 // generates style-rtl.css
 function rtl() {
-  return src('style.css')
+  return src(`${BLDROOT}/style.css`)
     .pipe(rtlcss())
-    .pipe(dest('src/style-rtl.css'))
+    .pipe(dest(`${BLDROOT}/style-rtl.css`))
 }
 
 
@@ -153,7 +153,7 @@ function clean() {
 function copyfiles() {
   let exts = ['php', 'txt', 'png'];
   return src(exts.map((ext) => `src/**/*.${ext}`))
-    .pipe(dest(BLDROOT))
+    .pipe(dest(`${BLDROOT}/.`))
     .pipe(bs.stream())
 }
 
