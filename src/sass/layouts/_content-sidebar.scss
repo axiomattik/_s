@@ -1,27 +1,34 @@
 .site {
-	display: grid;
-	grid-template-columns: auto ($size__site-sidebar);
-	grid-template-areas:
-		"header header"
-		"main sidebar"
-		"footer footer";
+	margin: auto;
+	padding: 1rem 2rem;
+	display: flex;
+	flex-direction: column;
+	max-width: 80rem;
 }
 
 .site-header {
-	grid-area: header;
+
+}
+
+.site-body { /* wrapper class for site-main and widget-area */
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: flex-start;
 }
 
 .site-main {
-	grid-area: main;
 	overflow: hidden; /* Resolves issue with <pre> elements forcing full width. */
+	max-width: 42rem;
 }
 
 .widget-area {
-	grid-area: sidebar;
+	max-width: 18rem;
 }
 
 .site-footer {
-	grid-area: footer;
+
 }
 
 @import "no-sidebar";
