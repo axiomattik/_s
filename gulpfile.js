@@ -160,27 +160,24 @@ function createarchive() {
 
 // watches for changes
 function monitor(cb) {
-	function doAndReload(f) {
-		return series(f, () => bs.reload());
-	}
 
 	// sass
-  watch('src/sass/**/*.scss', doAndReload(exports.css));
+  watch('src/sass/**/*.scss', exports.css).on('change', bs.reload);
 
 	// js
   watch(
 		['src/js/**/*.js', `!src/js/**/*${THEMENAME}*`], 
-		doAndReload(exports.js)
-	);
+		exports.js
+	).on('change', bs.reload);
 
 	// i18n
-  watch('src/languages/**/*', doAndReload(exports.i18n));
+  watch('src/languages/**/*', exports.i18n).on('change', bs.reload);
 
 	// other files
   watch(
 		['php', 'txt', 'php'].map((ext) => `src/**/*.${ext}`),
-    doAndReload(copyfiles)
-	);
+    copyfiles
+	).on('change', bs.reload);
 
   cb();
 }
