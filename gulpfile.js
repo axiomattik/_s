@@ -31,48 +31,40 @@ function minifyJS() {
 }
 
 
-// copies the minified js into the 'bld' directory
+// copies the concatenated and minified js files into the 'bld' directory
 function copyJS() {
-  return src(`src/js/${THEMENAME}-min.js`)
+  return src(`src/js/${THEMENAME}*.js`)
     .pipe(dest(`${BLDROOT}/js/`))
-    .pipe(bs.stream());
 }
 
 
 /* CSS */
 /*******/
 
-// compiles sass into style.css
+// compiles SASS and puts style.css in 'bld' directory
 function compileSASS() {
   return src('src/sass/style.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(dest(`${BLDROOT}/style.css`))
+    .pipe(dest(`${BLDROOT}/`))
 }
 
 
-// compiles WooCommerce SASS (if it exists) to woocommerce.css
+// compiles WooCommerce SASS (if it exists) 
+// and puts woocommerce.css in 'bld' directory
 function compileWooCommerceSASS() {
   return src('src/sass/woocommerce.scss', {
       allowEmpty: 'true',
     })
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(dest(`${BLDROOT}/woocommerce.css`))
+    .pipe(dest(`${BLDROOT}/`))
 }
 
 
-// generates style-rtl.css
+// generates style-rtl.css in 'bld' directory
 function rtl() {
   return src(`${BLDROOT}/style.css`)
     .pipe(rtlcss())
     .pipe(dest(`${BLDROOT}/style-rtl.css`))
-}
-
-
-// copies css files into the 'bld' directory
-function copyCSS() {
-  return src('src/style*.css')
-    .pipe(dest(`${BLDROOT}/.`))
-    .pipe(bs.stream());
 }
 
 
@@ -86,7 +78,6 @@ function i18npot() {
       domain: THEMENAME
     }))
     .pipe(dest('src/languages/' + THEMENAME + '.pot'))
-    .pipe(bs.stream());
 }
 
 
@@ -95,7 +86,6 @@ function i18npotomo() {
   return src('src/languages/*.po')
     .pipe(potomo())
     .pipe(dest(`${BLDROOT}/languages/`))
-    .pipe(bs.stream());
 }
 
 
@@ -149,12 +139,11 @@ function clean() {
 }
 
 
-// copies files that aren't compiled to the 'bld' directory
+// copies files (not js/css) into the 'bld' directory
 function copyfiles() {
   let exts = ['php', 'txt', 'png'];
   return src(exts.map((ext) => `src/**/*.${ext}`))
     .pipe(dest(`${BLDROOT}/.`))
-    .pipe(bs.stream())
 }
 
 
@@ -171,6 +160,27 @@ function createarchive() {
 
 // watches for changes
 function monitor(cb) {
+	function doAndReload(f) {
+		return series(f, () => bs.reload());
+	}
+
+	// sass
+  watch('src/sass/**/*.scss', doAndReload(exports.css));
+
+	// js
+  watch(
+		['src/js/**/*.js', `!src/js/**/*${THEMENAME}*`], 
+		doAndReload(exports.js)
+	);
+
+	// i18n
+  watch('src/languages/**/*', doAndReload(exports.i18n));
+
+	// other files
+  watch(
+		['php', 'txt', 'php'].map((ext) => `src/**/*.${ext}`),
+    doAndReload(copyfiles)
+	);
 
   cb();
 }
@@ -190,7 +200,7 @@ exports.clean = clean;
 
 exports.js = series(minifyJS, copyJS);
 
-exports.css = series(compileSASS, compileWooCommerceSASS, rtl, copyCSS);
+exports.css = series(compileSASS, compileWooCommerceSASS, rtl);
 
 exports.i18n = series(i18npot, i18npotomo);
 
