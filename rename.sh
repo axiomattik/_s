@@ -13,7 +13,7 @@ find ./src -type f -name "*.php" | xargs sed -i "s/_s_/${funcpre}_/g";
 
 # replace DocBlocks
 read -p "DocBlock slug (e.g. Awesome_Theme): " docblock;
-find ./src -type f -name "*.php" | xargs sed -i "s/ _s/${docblock}/g";
+find ./src -type f -name "*.php" | xargs sed -i "s/ _s/ ${docblock}/g";
 
 # replace prefixed handles
 read -p "Enter handles prefix (without trailing hyphen, e.g. awesome-theme): " handlesprefix;
