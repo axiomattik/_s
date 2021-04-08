@@ -22,3 +22,5 @@ find ./src -type f -name "*.php" | xargs sed -i "s/_s-/${handlesprefix}/g";
 # replace constants
 read -p "Enter constants prefix (without trailing underscore, e.g. AWESOME_THEME): " $constantprefix;
 find ./src -type f -name "*.php" | xargs sed -i "s/_S_/${constantprefix}/g";
+
+echo "Done. Now update the headers in style.scss, woocommerce.scss and the links in footer.php."
